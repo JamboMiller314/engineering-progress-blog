@@ -25,8 +25,14 @@ function App() {
     }
   });
   const [entry, setEntry] = useState(emptyEntry);
+  const [selectedTag, setSelectedTag] = useState("All");
   const featuredPost = posts[0];
   const recentPosts = posts.slice(1);
+  const allTags = ["All", ...new Set(posts.flatMap((post) => post.tags))];
+  const visiblePosts =
+    selectedTag === "All"
+      ? recentPosts
+      : recentPosts.filter((post) => post.tags.includes(selectedTag));
 
   useEffect(() => {
     localStorage.setItem(savedPostsKey, JSON.stringify(posts));
@@ -158,17 +164,47 @@ function App() {
       </section>
 
       <section className="post-list" id="projects">
-        <div className="section-heading">
-          <CalendarDays size={20} aria-hidden="true" />
-          <h2>Recent Entries</h2>
+        <div className="post-list-header">
+          <div className="section-heading">
+            <CalendarDays size={20} aria-hidden="true" />
+            <h2>Recent Entries</h2>
+          </div>
+
+          <TagFilter
+            selectedTag={selectedTag}
+            tags={allTags}
+            onSelectTag={setSelectedTag}
+          />
         </div>
+
         <div className="post-grid">
-          {recentPosts.map((post) => (
+          {visiblePosts.map((post) => (
             <PostPreview post={post} key={post.id} />
           ))}
         </div>
+
+        {visiblePosts.length === 0 && (
+          <p className="empty-state">No entries match the selected tag yet.</p>
+        )}
       </section>
     </main>
+  );
+}
+
+function TagFilter({ selectedTag, tags, onSelectTag }) {
+  return (
+    <div className="filter-row" aria-label="Filter posts by tag">
+      {tags.map((tag) => (
+        <button
+          className={tag === selectedTag ? "filter-button active" : "filter-button"}
+          key={tag}
+          type="button"
+          onClick={() => onSelectTag(tag)}
+        >
+          {tag}
+        </button>
+      ))}
+    </div>
   );
 }
 

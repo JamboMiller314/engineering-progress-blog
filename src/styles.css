@@ -359,6 +359,52 @@ a {
   margin-top: 34px;
 }
 
+.post-list-header {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-button {
+  min-height: 34px;
+  border: 1px solid rgba(255, 132, 43, 0.32);
+  border-radius: 2px;
+  background: rgba(33, 24, 20, 0.78);
+  color: #ffd9aa;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 6px 10px;
+  text-transform: uppercase;
+}
+
+.filter-button:hover {
+  border-color: #ff9b4a;
+  color: #fff0cf;
+}
+
+.filter-button.active {
+  background: #d95d1e;
+  color: #fffaf1;
+  box-shadow: 0 0 18px rgba(255, 132, 43, 0.28);
+}
+
+.empty-state {
+  border: 1px solid rgba(255, 132, 43, 0.32);
+  border-radius: 2px;
+  margin: 14px 0 0;
+  padding: 18px;
+  background: rgba(33, 24, 20, 0.72);
+  color: #ffd9aa;
+}
+
 @media (max-width: 780px) {
   .site-header,
   .hero,
